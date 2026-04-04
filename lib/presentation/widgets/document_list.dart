@@ -23,7 +23,7 @@ class _DocumentListState extends State<DocumentList> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    _loadInitial();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadInitial());
   }
 
   @override

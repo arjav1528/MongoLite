@@ -24,7 +24,7 @@ class DocumentProvider extends ChangeNotifier {
   int get currentPage => _currentPage;
   int get totalPages => (_totalDocuments / _pageSize).ceil();
   int get totalDocuments => _totalDocuments;
-  bool get hasMore => _currentPage < totalPages - 1;
+  bool get hasMore => _currentPage < totalPages;
   String? get selectedDatabase => _selectedDatabase;
   String? get selectedCollection => _selectedCollection;
 

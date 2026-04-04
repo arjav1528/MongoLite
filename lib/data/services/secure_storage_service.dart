@@ -1,9 +1,12 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageService {
-  static const _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage;
   static const _keyConnectionUri = 'mongo_connection_uri';
   static const _keyConnectionAlias = 'mongo_connection_alias';
+
+  SecureStorageService([FlutterSecureStorage? storage])
+      : _storage = storage ?? const FlutterSecureStorage();
 
   Future<void> saveConnectionConfig({required String uri, String? alias}) async {
     await _storage.write(key: _keyConnectionUri, value: uri);

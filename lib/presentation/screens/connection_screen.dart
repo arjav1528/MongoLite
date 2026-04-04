@@ -104,6 +104,7 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
+                    key: const ValueKey('connectButton'),
                     onPressed: isValid && !isConnecting ? _connect : null,
                     child: isConnecting
                         ? const SizedBox(
