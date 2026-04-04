@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/config/app_theme.dart';
 import '../../core/widgets/loading_indicator.dart';
+import '../../core/widgets/empty_state.dart';
 import '../../presentation/providers/connection_provider.dart';
 import '../../presentation/providers/database_provider.dart';
 import '../../presentation/providers/document_provider.dart';
 import '../../presentation/widgets/database_tree_item.dart';
 import '../../presentation/widgets/document_list.dart';
-import '../../core/widgets/empty_state.dart';
 import 'connection_screen.dart';
 import 'query_screen.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -87,8 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: docProvider.selectedCollection != null
           ? FloatingActionButton(
               onPressed: () => _showAddDocumentDialog(),
-              child: const Icon(Icons.add),
               tooltip: 'Add document',
+              child: const Icon(Icons.add),
             )
           : null,
     );

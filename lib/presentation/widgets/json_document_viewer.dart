@@ -9,7 +9,6 @@ class JsonDocumentViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formatted = JsonEncoder.withIndent('  ').convert(data);
-    final lines = formatted.split('\n');
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),

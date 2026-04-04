@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/config/app_theme.dart';
 import '../../core/utils/json_utils.dart';
 import '../../presentation/providers/document_provider.dart';
 
@@ -18,7 +16,6 @@ class QueryScreen extends StatefulWidget {
 
 class _QueryScreenState extends State<QueryScreen> {
   final _queryController = TextEditingController();
-  bool _hasResults = false;
 
   @override
   void dispose() {
@@ -45,7 +42,6 @@ class _QueryScreenState extends State<QueryScreen> {
     await provider.applyFilterAndReload();
 
     if (mounted) {
-      setState(() => _hasResults = true);
       Navigator.pop(context);
     }
   }

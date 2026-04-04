@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/models/mongo_database.dart';
+import '../../domain/models/mongo_collection.dart';
 import '../../presentation/providers/database_provider.dart';
 import '../../presentation/providers/document_provider.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,7 @@ class _DatabaseTreeItemState extends State<DatabaseTreeItem> {
                 );
               }
               return Column(
-                children: collections.map(_buildCollectionTile).toList(),
+                children: collections.map((c) => _buildCollectionTile(c)).toList(),
               );
             },
           )] : [],
@@ -51,7 +52,7 @@ class _DatabaseTreeItemState extends State<DatabaseTreeItem> {
     );
   }
 
-  Widget _buildCollectionTile(collection) {
+  Widget _buildCollectionTile(MongoCollectionInfo collection) {
     return Consumer<DocumentProvider>(
       builder: (context, docProvider, _) {
         final isSelected = docProvider.selectedCollection == collection.name &&

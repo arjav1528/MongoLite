@@ -59,9 +59,11 @@ class _DocumentEditScreenState extends State<DocumentEditScreen> {
       );
 
       if (mounted) {
-        await context.read<DocumentProvider>().refresh();
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
+        final docProvider = context.read<DocumentProvider>();
+        await docProvider.refresh();
+        final messengerContext = context;
+        Navigator.pop(messengerContext);
+        ScaffoldMessenger.of(messengerContext).showSnackBar(
           const SnackBar(content: Text('Document updated successfully')),
         );
       }

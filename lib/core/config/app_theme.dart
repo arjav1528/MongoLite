@@ -12,7 +12,7 @@ class AppTheme {
           primary: primaryGreen,
           surface: darkSurface,
           surfaceContainerHighest: const Color(0xFF3A3B3D),
-          tertiary: primaryGreen.withOpacity(0.2),
+          tertiary: Color.fromARGB(51, 0, 237, 100),
         ),
         scaffoldBackgroundColor: darkBg,
         appBarTheme: const AppBarTheme(
@@ -23,7 +23,7 @@ class AppTheme {
         drawerTheme: const DrawerThemeData(
           backgroundColor: darkSurface,
         ),
-        cardTheme: const CardTheme(
+        cardTheme: const CardThemeData(
           color: darkSurface,
           margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -74,7 +74,7 @@ class AppTheme {
         colorScheme: ColorScheme.light(
           primary: primaryGreen,
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: Colors.white,
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
