@@ -1,0 +1,27 @@
+name: mongolite
+description: "MongoDB client for phones — browse databases and documents on the go."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.0-142.0.dev
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # MongoDB Driver
+  mongo_dart: ^0.10.8
+  # State Management
+  provider: ^6.1.0
+  # Secure Storage
+  flutter_secure_storage: ^9.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
