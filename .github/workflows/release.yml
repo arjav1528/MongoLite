@@ -1,0 +1,113 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  release:
+    name: Build & Release
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: beta
+
+      - name: Cache Flutter
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache/
+            .dart_tool/
+          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: flutter-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run build_runner
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Compute version tag
+        id: version
+        run: |
+          # Read version from pubspec.yaml (e.g. 1.0.0+1)
+          FULL_VER=$(grep '^version:' pubspec.yaml | head -1 | awk '{print $2}')
+          VER=$(echo "$FULL_VER" | cut -d'+' -f1)
+          BUILD=$(echo "$FULL_VER" | cut -d'+' -f2)
+          # Auto-increment: use total main commits as build number to avoid conflicts
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          TAG="v${VER}+${COMMIT_COUNT}"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "version=$VER" >> $GITHUB_OUTPUT
+          echo "build=$COMMIT_COUNT" >> $GITHUB_ENV
+
+      - name: Check if tag already exists
+        id: check_tag
+        run: |
+          if git rev-parse "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and push tag
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.version.outputs.tag }}" -m "Release ${{ steps.version.outputs.tag }}"
+          git push origin "${{ steps.version.outputs.tag }}"
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+          PREV_TAG=$(git tag -l 'v*' --sort=-v:refname | grep -v "$TAG" | head -1)
+          if [ -n "$PREV_TAG" ]; then
+            CHANGES=$(git log "$PREV_TAG"..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          else
+            CHANGES=$(git log --pretty=format:"- %s (%h)" --no-merges | head -30)
+          fi
+          {
+            echo "CHANGELOG<<CHANGELOG_EOF"
+            echo "## MongoLite ${TAG}"
+            echo ""
+            echo "**Changes:**"
+            echo "$CHANGES"
+            echo ""
+            echo "**Build Date:** $(date -u)"
+            echo "**Commit:** ${{ github.sha }}"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_ENV"
+
+      - name: Build Android APK
+        run: flutter build apk --release
+
+      - name: Build Android App Bundle
+        run: flutter build appbundle --release
+
+      - name: Build iOS (no codesign)
+        run: flutter build ios --release --no-codesign
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "MongoLite ${{ steps.version.outputs.tag }}"
+          body: ${{ env.CHANGELOG }}
+          files: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/bundle/release/app-release.aab
+          draft: false
+          prerelease: false
+          generate_release_notes: false
