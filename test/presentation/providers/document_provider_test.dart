@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:mongolite/data/repositories/mongo_repository.dart';
 import 'package:mongolite/domain/models/mongo_document.dart';
 import 'package:mongolite/presentation/providers/document_provider.dart';
