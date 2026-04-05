@@ -58,8 +58,8 @@ class _DocumentEditScreenState extends State<DocumentEditScreen> {
         updates: parsed,
       );
 
-      final messengerContext = context;
-      final docProvider = messengerContext.read<DocumentProvider>();
+      // ignore: use_build_context_synchronously
+      final docProvider = context.read<DocumentProvider>();
       await docProvider.refresh();
       if (!mounted) return;
       Navigator.of(context).pop();
