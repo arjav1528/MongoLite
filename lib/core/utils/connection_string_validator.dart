@@ -14,7 +14,13 @@ class ConnectionStringValidator {
       return const ValidationResult.invalid('Connection string cannot be empty');
     }
 
-    final parsed = Uri.tryParse(uri);
+    // Strip any whitespace (newlines, spaces) that may come from copy-paste
+    final cleanUri = uri.trim().replaceAll(RegExp(r'\s+'), '');
+    if (cleanUri.isEmpty) {
+      return const ValidationResult.invalid('Connection string cannot be empty');
+    }
+
+    final parsed = Uri.tryParse(cleanUri);
     if (parsed == null) {
       return const ValidationResult.invalid('Invalid URI format');
     }
