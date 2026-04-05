@@ -43,7 +43,7 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
   }
 
   Future<void> _connect() async {
-    final uri = _uriController.text.trim().replaceAll(RegExp(r'\s+'), '');
+    final uri = _uriController.text.trim().replaceAll(RegExp(r'[\r\n]+'), '');
     if (uri.isEmpty) return;
 
     final provider = context.read<ConnectionProvider>();
@@ -61,7 +61,7 @@ class _ConnectionScreenState extends State<ConnectionScreen> {
   Widget build(BuildContext context) {
     final provider = context.watch<ConnectionProvider>();
     final rawUri = _uriController.text;
-    final cleanUri = rawUri.replaceAll(RegExp(r'\s+'), '');
+    final cleanUri = rawUri.replaceAll(RegExp(r'[\r\n]+'), '');
     final validationError = provider.getValidationError(cleanUri);
     final isValid = validationError == null && rawUri.trim().isNotEmpty;
     final isConnecting = provider.state == ConnectionStateEnum.connecting;

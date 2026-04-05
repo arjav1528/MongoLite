@@ -14,8 +14,9 @@ class ConnectionStringValidator {
       return const ValidationResult.invalid('Connection string cannot be empty');
     }
 
-    // Strip any whitespace (newlines, spaces) that may come from copy-paste
-    final cleanUri = uri.trim().replaceAll(RegExp(r'\s+'), '');
+    // Only strip newlines and carriage returns (copy-paste wrapping), preserve spaces
+    // that might be part of the password
+    final cleanUri = uri.trim().replaceAll(RegExp(r'[\r\n]+'), '');
     if (cleanUri.isEmpty) {
       return const ValidationResult.invalid('Connection string cannot be empty');
     }
