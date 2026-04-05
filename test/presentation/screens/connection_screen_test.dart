@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:mongolite/data/repositories/mongo_repository.dart';
 import 'package:mongolite/data/services/mongo_connection_service.dart';

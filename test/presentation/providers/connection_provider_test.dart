@@ -1,12 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:mongolite/data/repositories/mongo_repository.dart';
 import 'package:mongolite/data/services/mongo_connection_service.dart';
 import 'package:mongolite/data/services/secure_storage_service.dart';
 import 'package:mongolite/presentation/providers/connection_provider.dart';
-
-import 'connection_provider_test.mocks.dart';
 
 @GenerateMocks([MongoConnectionService, SecureStorageService, MongoRepository])
 void main() {
