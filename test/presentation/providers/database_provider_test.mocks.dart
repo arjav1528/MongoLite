@@ -35,26 +35,26 @@ class MockMongoRepository extends _i1.Mock implements _i2.MongoRepository {
   }
 
   @override
-  _i3.Future<List<_i4.MongoDatabaseInfo>> getDatabases() =>
-      (super.noSuchMethod(
-            Invocation.method(#getDatabases, []),
-            returnValue: _i3.Future<List<_i4.MongoDatabaseInfo>>.value(
-              <_i4.MongoDatabaseInfo>[],
-            ),
-          )
-          as _i3.Future<List<_i4.MongoDatabaseInfo>>);
+  _i3.Future<List<_i4.MongoDatabaseInfo>> getDatabases() => (super.noSuchMethod(
+        Invocation.method(
+          #getDatabases,
+          [],
+        ),
+        returnValue: _i3.Future<List<_i4.MongoDatabaseInfo>>.value(
+            <_i4.MongoDatabaseInfo>[]),
+      ) as _i3.Future<List<_i4.MongoDatabaseInfo>>);
 
   @override
   _i3.Future<List<_i5.MongoCollectionInfo>> getCollections(
-    String? databaseName,
-  ) =>
+          String? databaseName) =>
       (super.noSuchMethod(
-            Invocation.method(#getCollections, [databaseName]),
-            returnValue: _i3.Future<List<_i5.MongoCollectionInfo>>.value(
-              <_i5.MongoCollectionInfo>[],
-            ),
-          )
-          as _i3.Future<List<_i5.MongoCollectionInfo>>);
+        Invocation.method(
+          #getCollections,
+          [databaseName],
+        ),
+        returnValue: _i3.Future<List<_i5.MongoCollectionInfo>>.value(
+            <_i5.MongoCollectionInfo>[]),
+      ) as _i3.Future<List<_i5.MongoCollectionInfo>>);
 
   @override
   _i3.Future<List<_i6.MongoDocument>> getDocuments({
@@ -65,18 +65,20 @@ class MockMongoRepository extends _i1.Mock implements _i2.MongoRepository {
     int? limit = 20,
   }) =>
       (super.noSuchMethod(
-            Invocation.method(#getDocuments, [], {
-              #database: database,
-              #collection: collection,
-              #filter: filter,
-              #skip: skip,
-              #limit: limit,
-            }),
-            returnValue: _i3.Future<List<_i6.MongoDocument>>.value(
-              <_i6.MongoDocument>[],
-            ),
-          )
-          as _i3.Future<List<_i6.MongoDocument>>);
+        Invocation.method(
+          #getDocuments,
+          [],
+          {
+            #database: database,
+            #collection: collection,
+            #filter: filter,
+            #skip: skip,
+            #limit: limit,
+          },
+        ),
+        returnValue:
+            _i3.Future<List<_i6.MongoDocument>>.value(<_i6.MongoDocument>[]),
+      ) as _i3.Future<List<_i6.MongoDocument>>);
 
   @override
   _i3.Future<int> countDocuments({
@@ -85,23 +87,28 @@ class MockMongoRepository extends _i1.Mock implements _i2.MongoRepository {
     Map<String, dynamic>? filter,
   }) =>
       (super.noSuchMethod(
-            Invocation.method(#countDocuments, [], {
-              #database: database,
-              #collection: collection,
-              #filter: filter,
-            }),
-            returnValue: _i3.Future<int>.value(0),
-          )
-          as _i3.Future<int>);
+        Invocation.method(
+          #countDocuments,
+          [],
+          {
+            #database: database,
+            #collection: collection,
+            #filter: filter,
+          },
+        ),
+        returnValue: _i3.Future<int>.value(0),
+      ) as _i3.Future<int>);
 
   @override
   _i3.Future<void> insertDocument(_i6.MongoDocument? document) =>
       (super.noSuchMethod(
-            Invocation.method(#insertDocument, [document]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
-          )
-          as _i3.Future<void>);
+        Invocation.method(
+          #insertDocument,
+          [document],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> updateDocument({
@@ -111,16 +118,19 @@ class MockMongoRepository extends _i1.Mock implements _i2.MongoRepository {
     required Map<String, dynamic>? updates,
   }) =>
       (super.noSuchMethod(
-            Invocation.method(#updateDocument, [], {
-              #database: database,
-              #collection: collection,
-              #documentId: documentId,
-              #updates: updates,
-            }),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
-          )
-          as _i3.Future<void>);
+        Invocation.method(
+          #updateDocument,
+          [],
+          {
+            #database: database,
+            #collection: collection,
+            #documentId: documentId,
+            #updates: updates,
+          },
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 
   @override
   _i3.Future<void> deleteDocument({
@@ -129,13 +139,16 @@ class MockMongoRepository extends _i1.Mock implements _i2.MongoRepository {
     required dynamic documentId,
   }) =>
       (super.noSuchMethod(
-            Invocation.method(#deleteDocument, [], {
-              #database: database,
-              #collection: collection,
-              #documentId: documentId,
-            }),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
-          )
-          as _i3.Future<void>);
+        Invocation.method(
+          #deleteDocument,
+          [],
+          {
+            #database: database,
+            #collection: collection,
+            #documentId: documentId,
+          },
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }
