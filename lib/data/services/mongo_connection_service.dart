@@ -42,10 +42,7 @@ class MongoConnectionService {
   Future<List<String>> getDatabaseNames() async {
     _ensureConnected();
     try {
-      final result = await _db!.listDatabases();
-      final databases = result['databases'] as List<dynamic>?;
-      if (databases == null) return [];
-      return databases.map((d) => (d as Map<String, dynamic>)['name'].toString()).toList();
+      return (await _db!.listDatabases()).cast<String>().toList();
     } catch (e) {
       throw ConnectionFailedException('Failed to list databases: ${e.toString()}');
     }
