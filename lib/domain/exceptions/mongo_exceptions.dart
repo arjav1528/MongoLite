@@ -1,6 +1,9 @@
 sealed class MongoAppException implements Exception {
   final String message;
   const MongoAppException(this.message);
+
+  @override
+  String toString() => message;
 }
 
 class ConnectionFailedException extends MongoAppException {
