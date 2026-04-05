@@ -20,4 +20,10 @@ class JsonUtils {
     if (str.length <= maxLength) return str;
     return '${str.substring(0, maxLength)}...';
   }
+
+  /// Deep-copy a value via JSON round-trip (safe for MongoDB-compatible types).
+  static dynamic deepCopy(dynamic value) {
+    if (value == null) return null;
+    return jsonDecode(jsonEncode(value));
+  }
 }
