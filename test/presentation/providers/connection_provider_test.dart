@@ -4,7 +4,7 @@ import 'package:mongolite/data/services/mongo_connection_service.dart';
 import 'package:mongolite/data/services/secure_storage_service.dart';
 import 'package:mongolite/presentation/providers/connection_provider.dart';
 
-@GenerateMocks([MongoConnectionService, SecureStorageService, MongoRepository])
+@GenerateMocks([])
 void main() {
   group('ConnectionProvider', () {
     late FakeMongoConnectionService fakeMongoService;
