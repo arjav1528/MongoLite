@@ -1,3 +1,4 @@
+import 'package:bson/bson.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mongolite/core/utils/json_utils.dart';
 
@@ -25,6 +26,18 @@ void main() {
       expect(formatted, contains('"address"'));
       expect(formatted, contains('"city"'));
       expect(formatted, contains('"NYC"'));
+    });
+
+    test('encodeMongoDocumentPretty encodes BSON DateTime and ObjectId', () {
+      final data = {
+        'created': DateTime.utc(2024, 1, 15, 12, 0, 0),
+        'ref': ObjectId.fromHexString('507f1f77bcf86cd799439011'),
+      };
+      final formatted = JsonUtils.encodeMongoDocumentPretty(data);
+
+      expect(formatted, contains(r'$date'));
+      expect(formatted, contains('507f1f77bcf86cd799439011'));
+      expect(formatted, contains(r'$oid'));
     });
 
     test('tryParse returns Map from valid JSON string', () {

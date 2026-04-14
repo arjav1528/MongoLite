@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:convert';
 
 import '../../core/config/app_theme.dart';
+import '../../core/utils/json_utils.dart';
 import '../../domain/models/mongo_document.dart';
 import 'document_edit_screen.dart';
 
@@ -13,7 +13,7 @@ class DocumentDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final json = JsonEncoder.withIndent('  ').convert(document.data);
+    final json = JsonUtils.encodeMongoDocumentPretty(document.data);
 
     return Scaffold(
       appBar: AppBar(

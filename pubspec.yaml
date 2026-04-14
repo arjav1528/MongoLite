@@ -13,6 +13,7 @@ dependencies:
 
   # MongoDB Driver
   mongo_dart: ^0.10.8
+  bson: ^5.0.8 # Extended JSON (EJSON) for BSON types in document display
   # State Management
   provider: ^6.1.0
   # Secure Storage

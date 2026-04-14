@@ -14,9 +14,9 @@ class MongoConnectionService {
   }
 
   String _buildUri(String databaseName) {
-    final uri = Uri.parse(_connectionString!);
-    final portPart = uri.hasPort ? ':${uri.port}' : '';
-    return '${uri.scheme}://${uri.host}$portPart/$databaseName';
+    return Uri.parse(_connectionString!)
+        .replace(path: '/$databaseName')
+        .toString();
   }
 
   /// Connect to MongoDB using the provided connection string.
@@ -52,7 +52,7 @@ class MongoConnectionService {
   Future<List<String>> getCollectionNames(String databaseName) async {
     _ensureConnected();
     try {
-      final db = Db(_buildUri(databaseName));
+      final db = await Db.create(_buildUri(databaseName));
       await db.open();
       final collections = await db.getCollectionNames();
       await db.close();
@@ -134,9 +134,17 @@ class MongoConnectionService {
       final col = dbRef.collection(collectionName);
       final modifier = ModifierBuilder();
       updates.forEach((key, value) {
-        modifier.set(key, value);
+        if (key != '_id') {
+          modifier.set(key, value);
+        }
       });
-      await col.updateOne(where.eq('_id', documentId), modifier);
+      final result = await col.updateOne(where.eq('_id', documentId), modifier);
+      
+      if (result.hasWriteErrors) {
+        throw Exception(result.writeError?.errmsg ?? 'Unknown write error');
+      } else if (result.nMatched == 0) {
+        throw Exception('Document not found for update.');
+      }
     } finally {
       await dbRef.close();
     }
@@ -160,7 +168,7 @@ class MongoConnectionService {
 
   /// Internal helper to get a Db reference for a database.
   Future<Db> _getDb(String databaseName) async {
-    final db = Db(_buildUri(databaseName));
+    final db = await Db.create(_buildUri(databaseName));
     await db.open();
     return db;
   }

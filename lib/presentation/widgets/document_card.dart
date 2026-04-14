@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -103,7 +102,7 @@ class DocumentCard extends StatelessWidget {
         ).then((_) => onRefresh?.call());
         break;
       case 'copy':
-        final json = JsonEncoder.withIndent('  ').convert(document.data);
+        final json = JsonUtils.encodeMongoDocumentPretty(document.data);
         await Clipboard.setData(ClipboardData(text: json));
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

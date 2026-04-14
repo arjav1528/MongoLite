@@ -1,5 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+
+import '../../core/utils/json_utils.dart';
 
 class JsonDocumentViewer extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -8,7 +9,7 @@ class JsonDocumentViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatted = JsonEncoder.withIndent('  ').convert(data);
+    final formatted = JsonUtils.encodeMongoDocumentPretty(data);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),

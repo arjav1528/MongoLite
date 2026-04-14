@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../core/config/app_theme.dart';
+import '../../core/utils/json_utils.dart';
 
 /// Type-aware field editor that dispatches to the correct UI based on value type.
 class FieldEditor extends StatelessWidget {
@@ -592,7 +593,13 @@ class _ArrayItem {
   _ArrayItem({required this.value}) {
     if (value is String || value is Map || value is List) {
       controller = TextEditingController(
-        text: value is String ? value : jsonEncode(value),
+        text: value is String
+            ? value
+            : value is Map
+                ? JsonUtils.encodeMongoDocumentPretty(
+                    Map<String, dynamic>.from(value as Map),
+                  )
+                : JsonUtils.encodeMongoListPretty(value as List<dynamic>),
       );
     } else if (value is num) {
       controller = TextEditingController(text: value.toString());
@@ -640,7 +647,9 @@ class _MapFieldEditorState extends State<_MapFieldEditor> {
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: const JsonEncoder.withIndent('  ').convert(widget.value),
+      text: JsonUtils.encodeMongoDocumentPretty(
+        Map<String, dynamic>.from(widget.value),
+      ),
     );
   }
 

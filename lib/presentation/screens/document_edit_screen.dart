@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +33,7 @@ class _DocumentEditScreenState extends State<DocumentEditScreen> {
     super.initState();
     _liveData = JsonUtils.deepCopy(widget.document.data);
     _jsonController = TextEditingController(
-      text: JsonEncoder.withIndent('  ').convert(_liveData),
+      text: JsonUtils.encodeMongoDocumentPretty(_liveData),
     );
   }
 
@@ -46,7 +45,7 @@ class _DocumentEditScreenState extends State<DocumentEditScreen> {
 
   /// Rebuilds _jsonController from _liveData (used when switching modes).
   void _syncRawEditor() {
-    _jsonController.text = JsonEncoder.withIndent('  ').convert(_liveData);
+    _jsonController.text = JsonUtils.encodeMongoDocumentPretty(_liveData);
   }
 
   Future<void> _save() async {
@@ -82,7 +81,7 @@ class _DocumentEditScreenState extends State<DocumentEditScreen> {
       // ignore: use_build_context_synchronously
       final docProvider = context.read<DocumentProvider>();
       await docProvider.refresh();
-      if (mounted) return;
+      if (!mounted) return;
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Document updated successfully')),
